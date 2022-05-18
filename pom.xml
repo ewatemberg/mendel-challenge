@@ -15,6 +15,7 @@
     <description>MendelCodeChallenge</description>
     <properties>
         <java.version>11</java.version>
+        <spock.version>1.2-groovy-2.5</spock.version>
     </properties>
     <dependencies>
         <dependency>
@@ -38,6 +39,25 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-core</artifactId>
+            <version>${spock.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-spring</artifactId>
+            <version>${spock.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <!-- any version of Groovy \>= 1.5.0 should work here -->
+            <version>2.5.8</version>
+            <type>pom</type>
+        </dependency>
     </dependencies>
 
     <build>
@@ -53,6 +73,22 @@
                         </exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <!-- The gmavenplus plugin is used to compile Groovy code. To learn more about this plugin, visit https://github.com/groovy/GMavenPlus/wiki -->
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <artifactId>gmavenplus-plugin</artifactId>
+                <version>1.8.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>addSources</goal>
+                            <goal>addTestSources</goal>
+                            <goal>compile</goal>
+                            <goal>compileTests</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

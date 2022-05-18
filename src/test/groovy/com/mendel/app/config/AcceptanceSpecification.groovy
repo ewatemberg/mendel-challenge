@@ -30,4 +30,8 @@ class AcceptanceSpecification extends Specification {
          raw       : response.contentAsString]
     }
 
+    protected def getJson(String jsonAsString) {
+        jsonSlurper.parseText(jsonAsString)
+    }
+
 }

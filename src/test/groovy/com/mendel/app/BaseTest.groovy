@@ -11,11 +11,12 @@ class BaseTest extends Specification {
         objectMapper = new ObjectMapper()
     }
 
-    def createObjetoFromJson(String jsonPath, Class<?> clazzObject) {
+    def createObjectFromJson(String jsonPath, Class<?> clazzObject) {
         objectMapper.readValue(readJson(jsonPath), clazzObject)
     }
 
     def readJson(String jsonPath) {
         new File(getClass().getResource(jsonPath).toURI()).text
     }
+
 }

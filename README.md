@@ -18,7 +18,7 @@ Ejecutar
 1) posicionarse en el root del proyecto, donde se encuentra el archivo _Dockerfile_
 2) construir la imagen:
    
-        sudo docker build -t mendel-app:1.0 .
+        docker build -t mendel-app:1.0 .
 
 3) correr el contenedor
 

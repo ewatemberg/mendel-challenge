@@ -12,7 +12,7 @@
     <artifactId>MendelCodeChallenge</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>MendelCodeChallenge</name>
-    <description>MendelCodeChallenge</description>
+    <description>Code Challenge</description>
     <properties>
         <java.version>11</java.version>
         <spock.version>2.0-groovy-3.0</spock.version>
@@ -104,6 +104,17 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <configuration>
+                    <useFile>false</useFile>
+                    <includes>
+                        <include>**/*Test.java</include>
+                        <include>**/*Spec.java</include>
+                    </includes>
+                </configuration>
             </plugin>
         </plugins>
     </build>

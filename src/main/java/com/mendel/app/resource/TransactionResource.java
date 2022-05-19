@@ -4,6 +4,7 @@ import com.mendel.app.config.ApiVersion;
 import com.mendel.app.domain.Transaction;
 import com.mendel.app.exception.ApiError;
 import com.mendel.app.service.TransactionService;
+import com.mendel.app.service.dto.TransactionDTO;
 import com.mendel.app.util.Messages;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -42,18 +43,16 @@ public class TransactionResource {
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})
     })
     @PutMapping(ApiVersion.V1 + PATH_ID)
-    public ResponseEntity<Transaction> createTx(
-            @PathVariable(value = "id") final Long id, @Valid @RequestBody Transaction transaction) {
+    public ResponseEntity<TransactionDTO> createTx(
+            @PathVariable(value = "id") final Long id, @Valid @RequestBody TransactionDTO transactionDTO) {
         log.debug("REST request to create a transaction with id: {}", id);
-        return ResponseEntity.ok().body(transactionService.save(transaction));
+        return ResponseEntity.ok().body(transactionService.save(id, transactionDTO));
     }
 
     @Operation(summary = "Obtiene una lista de ids agrupado por tipo")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = Messages.RESOURCE_CREATED,
-                    content = {@Content(mediaType = "application/json")}),
-            @ApiResponse(responseCode = "404", description = Messages.RESOURCE_NOT_FOUND,
-                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ApiError.class))})
+                    content = {@Content(mediaType = "application/json")})
     })
     @GetMapping(ApiVersion.V1 + PATH_TYPE)
     public ResponseEntity<List<Long>> getIdsByType(

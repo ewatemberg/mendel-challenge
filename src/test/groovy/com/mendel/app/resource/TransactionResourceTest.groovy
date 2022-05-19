@@ -4,6 +4,7 @@ import com.mendel.app.BaseTest
 import com.mendel.app.config.StaticContextHolder
 import com.mendel.app.domain.Transaction
 import com.mendel.app.service.TransactionService
+import com.mendel.app.service.dto.TransactionDTO
 import org.springframework.beans.factory.BeanFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
@@ -15,6 +16,8 @@ import spock.mock.DetachedMockFactory
 class TransactionResourceTest extends BaseTest {
 
     @Autowired
+    private Transaction transaction
+    @Autowired
     private TransactionService transactionService
     @Autowired
     private TransactionResource transactionResource
@@ -23,19 +26,19 @@ class TransactionResourceTest extends BaseTest {
     private static final String PATH_JSON = "/json/transaction/put/"
 
     def setup() {
-        StaticContextHolder.CONTEXT = beanFactory
+        //StaticContextHolder.CONTEXT = beanFactory
     }
 
     def "Se hace un PUT para crear una transaccion y la API responde OK con los datos del transaccion creada"() {
 
         given: "Dado un request de una transaccion"
-        def transaction = createObjectFromJson("${PATH_JSON}VALID_CREATE_REQUEST.json", Transaction.class)
+        def transaction = createObjectFromJson("${PATH_JSON}VALID_CREATE_REQUEST.json", TransactionDTO.class)
 
         when: "Hago la invocación al metodo del recurso crear una transaccion con el ID 10"
         def response = transactionResource.createTx(10L, transaction)
 
         then: "Persisto la información y obtengo el objecto creado"
-        1 * transactionService.save(transaction) >> {
+        1 * transactionService.save(_, _) >> {
             return transaction
         }
         response.statusCodeValue == HttpStatus.OK.value()
@@ -54,7 +57,7 @@ class TransactionResourceTest extends BaseTest {
 
         then: "Obtengo la informacion"
         1 * transactionService.findByType(type) >> {
-            return Arrays.asList(10L,11L,12L);
+            return Arrays.asList(10L, 11L, 12L);
         }
         response.statusCodeValue == HttpStatus.OK.value()
         response.body[0] == 10L
@@ -88,6 +91,11 @@ class TransactionResourceTest extends BaseTest {
         @Bean
         TransactionService transactionService() {
             return mockFactory.Mock(TransactionService)
+        }
+
+        @Bean
+        Transaction transaction() {
+            return mockFactory.Mock(Transaction)
         }
 
         @Bean

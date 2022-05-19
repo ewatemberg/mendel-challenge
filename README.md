@@ -14,6 +14,12 @@ devuelva información sobre esas transacciones.
 Para el desarrollo y la ejecución de los tests, se hace uso de la herramienta Spock.
 En este [repo](https://github.com/ewatemberg/acceptance-test-spock) existe información sobre una capacitación acerca de su uso y sus virtudes en la legibilidad de los test y entendimiento.
 
+Para correr los test
+
+    mvn test
+
+_En la carpeta **src/main/test/resources/atdd** se encuentran los test de Aceptación._
+
 
 ## Herramientas
 * [Spring boot](https://spring.io/projects/spring-boot) - Framework de java

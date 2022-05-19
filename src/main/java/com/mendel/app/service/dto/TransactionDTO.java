@@ -1,10 +1,11 @@
-package com.mendel.app.domain;
+package com.mendel.app.service.dto;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -13,11 +14,9 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Component
-public class Transaction {
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+public class TransactionDTO {
 
-    @NotNull
-    private Long id;
     @NotNull
     private Double amount;
     @NotEmpty

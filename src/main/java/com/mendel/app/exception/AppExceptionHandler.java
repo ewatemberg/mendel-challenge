@@ -15,6 +15,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Slf4j
 public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @ExceptionHandler({TypeNotFoundException.class})
+    public ResponseEntity<ApiError> handleAccessDenied(TypeNotFoundException ex) {
+        log.error(ex.getMessage());
+        return new ResponseEntity<>(ex.getApiError(), HttpStatus.NOT_FOUND);
+    }
 
     @Override
     protected ResponseEntity<Object> handleMissingServletRequestParameter(MissingServletRequestParameterException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {

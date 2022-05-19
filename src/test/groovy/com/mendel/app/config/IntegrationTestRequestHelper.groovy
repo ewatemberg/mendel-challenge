@@ -1,10 +1,15 @@
 package com.mendel.app.config
 
+import com.mendel.app.resource.TransactionResource
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 
 class IntegrationTestRequestHelper {
+
+    public static final String PATH_TRANSACTION_ID = "/api/${ApiVersion.V1}${TransactionResource.PATH}"
+    public static final String PATH_TRANSACTION_TYPE = "/api/${ApiVersion.V1}${TransactionResource.PATH}/types"
+    public static final String PATH_TRANSACTION_SUM = "/api/${ApiVersion.V1}${TransactionResource.PATH}/sum"
 
     protected static def POST(MockMvc mockMvc, String path, String jsonBody) {
         String mediaType = MediaType.APPLICATION_JSON

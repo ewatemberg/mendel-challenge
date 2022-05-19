@@ -24,7 +24,7 @@ Ejecutar
 
         docker run -d -p 8080:8080 -t mendel-app:1.0
 
-Nota: Es necesario compilar la app, antes de poder generar la imagen. De lo contrario el archivo ejecutable no estará disponible.
+Nota: Es necesario compilar la app con maven _mvn clean install_, antes de poder generar la imagen. De lo contrario el archivo ejecutable no estará disponible.
 
 ## Doc 📖️
 - [API REST Contrato](http://localhost:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#)

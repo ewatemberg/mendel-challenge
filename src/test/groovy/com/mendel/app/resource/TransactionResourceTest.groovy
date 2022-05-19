@@ -32,7 +32,7 @@ class TransactionResourceTest extends BaseTest {
         def transaction = createObjectFromJson("${PATH_JSON}VALID_CREATE_REQUEST.json", Transaction.class)
 
         when: "Hago la invocación al metodo del recurso crear una transaccion con el ID 10"
-        def response = transactionResource.updateOrCreateTx(10L, transaction)
+        def response = transactionResource.createTx(10L, transaction)
 
         then: "Persisto la información y obtengo el objecto creado"
         1 * transactionService.save(transaction) >> {
@@ -42,6 +42,42 @@ class TransactionResourceTest extends BaseTest {
         response.body.amount == 5000
         response.body.parentId == null
         response.body.type == "cars"
+    }
+
+    def "Se hace un GET para obtener las transacciones por tipo y la API responde OK con los datos del transacciones agrupadas"() {
+
+        given: "Dado un tipo de transaccion"
+        def type = "cars"
+
+        when: "Hago la invocación al metodo del recurso para obtener las transacciones por tipo"
+        def response = transactionResource.getIdsByType(type)
+
+        then: "Obtengo la informacion"
+        1 * transactionService.findByType(type) >> {
+            return Arrays.asList(10L,11L,12L);
+        }
+        response.statusCodeValue == HttpStatus.OK.value()
+        response.body[0] == 10L
+        response.body[1] == 11L
+        response.body[2] == 12L
+    }
+
+    def "Se hace un GET para obtener la suma de todas las transacciones por parent_id y la API responde OK la suma"() {
+
+        given: "Dado un parent_id"
+        def parentId = 10
+
+        when: "Hago la invocación al metodo del recurso para obtener la suma"
+        def response = transactionResource.sumarizeAmountByParentId(parentId)
+
+        then: "Obtengo la informacion"
+        1 * transactionService.sumarizeByParentId(parentId) >> {
+            def map = new HashMap<String, Double>()
+            map.put("sum", 20000)
+            return map
+        }
+        response.statusCodeValue == HttpStatus.OK.value()
+        response.body.sum == 20000
     }
 
 
